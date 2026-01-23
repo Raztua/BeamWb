@@ -1,0 +1,78 @@
+BeamWB for FreeCAD
+⚠️ ALPHA VERSION WARNING ⚠️
+
+This workbench is currently in the ALPHA stage of development.
+
+Features may be incomplete or subject to change.
+
+Bugs and stability issues may be present.
+
+Validation Required: Always independently verify results with hand calculations or established commercial software. Do not use for critical production engineering without rigorous verification.
+
+🏗️ Overview
+BeamWB is a custom Workbench for FreeCAD dedicated to 1D structural beam analysis. It provides a seamless interface between FreeCAD's parametric environment and the PyNite Finite Element Analysis (FEA) library.
+
+Designed for structural engineers and students, BeamWB allows you to model, analyze, and perform design code checks on beam structures directly within FreeCAD.
+
+✨ Key Features
+🔧 Pre-Processing
+Geometry Creation: Intuitive tools to create and modify Nodes and Beams.
+
+Section Management: Define standard structural sections (I-Shape, HSS, Rectangular, Tubular) with parametric properties.
+
+Material Library: Custom material creation including isotropic properties (E, G, Yield Strength).
+
+🌪️ Loads & Boundary Conditions
+Supports: Flexible boundary condition creation (Fixed, Pinned, Roller, etc.).
+
+Load Types:
+
+Nodal Loads: Point forces and moments.
+
+Member Loads: Distributed loads along beam elements.
+
+Acceleration Loads: Global acceleration (e.g., Gravity/Self-weight).
+
+Load Combinations: Create load combinations (ULS/SLS) with custom factors.
+
+🧮 Analysis & Solver
+PyNite Integration: Utilizes the open-source PyNite library for reliable 3D static linear elastic analysis.
+
+Solver Management: Dedicated solver object to manage analysis runs and store results within the FreeCAD document tree.
+
+✅ Design Code Checking
+Integrated Design Checks: Perform unity checks on structural members.
+
+Standards Support: Currently includes implementation for Eurocode 3 (steel design).
+
+Result Envelopes: Automatically calculates envelopes for multiple load cases.
+
+📊 Post-Processing
+Visual Results: 3D visualization of shear, moment, and deflection diagrams directly in the 3D view.
+
+Detailed Logs: Inspect detailed calculation logs and unity check values per member.
+
+Data Reporting: Tabular view of node and beam results.
+
+🚀 Installation
+Download the repository.
+
+Place the BeamWB folder into your FreeCAD Mod directory:
+
+Windows: %APPDATA%\FreeCAD\Mod\
+
+Linux: ~/.local/share/FreeCAD/Mod/
+
+macOS: ~/Library/Application Support/FreeCAD/Mod/
+
+Restart FreeCAD and select BeamWB from the workbench dropdown.
+
+🛠️ Dependencies
+FreeCAD (v0.20 or later recommended)
+
+PyNite: (Usually bundled or installed via pip)
+
+NumPy
+
+🤝 Contributing
+Contributions are welcome! Since this is an Alpha release, please report any bugs or feature requests via the Issues tab.
