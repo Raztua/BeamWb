@@ -70,7 +70,7 @@ Restart FreeCAD and select BeamWB from the workbench dropdown.
 🛠️ Dependencies
 FreeCAD (v0.20 or later recommended)
 
-PyNite: (Usually bundled or installed via pip)
+PyNite: included
 
 NumPy
 
