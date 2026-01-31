@@ -1,0 +1,24 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_33" height="51.21359" width="58.73787" y="13.63107" x="66.2233" stroke="#000" fill="#dd6c70"/>
+  <rect stroke="#000" id="svg_35" height="49.75728" width="53.76214" y="2.70874" x="8.2136" fill="#ffff56"/>
+  <path fill="#ffff56" stroke="#000" opacity="undefined" d="m1.66944,9.47711l55.09709,0l0,49.39321l-55.09709,0l0,-49.39321z" id="svg_55"/>
+ </g>
+
+ <g>
+  <title>Layer 2</title>
+  <g id="svg_5" stroke="null">
+   <circle cx="30.43149" cy="18.29454" r="5.26761" fill="#4682b4" id="svg_1" stroke="#000000"/>
+   <circle cx="43.07376" cy="18.29454" r="5.26761" fill="#4682b4" id="svg_2" stroke="#000000"/>
+  </g>
+  <g id="svg_6" stroke="null">
+   <circle cx="23.57199" cy="27.1627" r="7.19599" fill="#4682b4" id="svg_3" stroke="#000000"/>
+   <circle cx="40.84236" cy="27.1627" r="7.19599" fill="#4682b4" id="svg_4" stroke="#000000"/>
+  </g>
+  <g id="svg_9" stroke="null">
+   <circle cx="18.25238" cy="38.25732" r="9.12436" fill="#4682b4" id="svg_7" stroke="#000000"/>
+   <circle cx="40.15084" cy="38.25732" r="9.12436" fill="#4682b4" id="svg_8" stroke="#000000"/>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+ <g id="Layer_1">
+  <title>Layer 1</title>
+  <path stroke-width="4" stroke="#000" id="svg_1" d="m15.38755,47.76397l31.88702,-11.18534" opacity="undefined" stroke-linecap="undefined" stroke-linejoin="undefined" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_2" y="24.56143" x="7.01763" stroke="#000" fill="#ff0000">ABC</text>
+  <path id="svg_3" d="m49.8245,43.85961c-4.26479,0 -7.71927,-3.45448 -7.71927,-7.71927c0,-4.26479 3.45448,-7.71927 7.71927,-7.71927c4.26479,0 7.71927,3.45448 7.71927,7.71927c0,4.26479 -3.45448,7.71927 -7.71927,7.71927z" opacity="undefined" stroke="#000" fill="#0000ff"/>
+  <ellipse ry="7.71927" rx="7.71927" id="svg_4" cy="47.36837" cx="14.38602" stroke="#000" fill="#0000ff"/>
+ </g>
+</svg>

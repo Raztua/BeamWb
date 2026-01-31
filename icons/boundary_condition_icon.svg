@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base pyramid -->
+  <polygon points="32,14 18,48 ,56" fill="#0a0" stroke="#000" stroke-width="1"/>
+  <polygon points="32,14 8,48 32,62" fill="#0b0" stroke="#000" stroke-width="1"/>
+  <polygon points="32,14 56,48 32,62" fill="#090" stroke="#000" stroke-width="1"/>
+    <!-- black sphere on top -->
+  <circle cx="32" cy="14" r="9" fill="000" />
+  <!-- Green sphere on top -->
+  <circle cx="32" cy="14" r="8" fill="#0b0" />
+</svg>

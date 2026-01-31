@@ -1,0 +1,10 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>Layer 1</title>
+  <path transform="rotate(90 38.4171 30.8589)" opacity="0.5" stroke="#00007f" id="svg_34" d="m11.77352,54.02409l26.6436,-46.33041l26.6436,46.33041l-53.28719,0z" fill="#00ff00"/>
+  <path id="svg_35" d="m26.04844,31.93079" opacity="NaN" stroke="#00007f" fill="#00ff00"/>
+  <path transform="rotate(90 35.303 33.2811)" stroke="#00007f" id="svg_37" d="m8.65934,56.44624l26.64359,-46.33042l26.6436,46.33042l-53.28719,0z" fill="#00ff00"/>
+  <text xml:space="preserve" text-anchor="start" font-family="'Hepta Slab'" font-size="12" stroke-width="0" id="svg_36" y="37.88235" x="14.28373" stroke="#00007f" fill="#ff5656">RUN</text>
+ </g>
+</svg>
