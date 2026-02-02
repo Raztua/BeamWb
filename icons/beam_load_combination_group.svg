@@ -1,0 +1,30 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+ <g id="Layer_1">
+  <title>Layer 1</title>
+  <rect fill="#dd6c70" stroke="#000" x="66.2233" y="13.63107" width="58.73787" height="51.21359" id="svg_33"/>
+  <rect fill="#ffff56" x="8.2136" y="2.70874" width="53.76214" height="49.75728" id="svg_35" stroke="#000"/>
+  <rect fill="#ffff56" x="2.14563" y="8.04854" width="55.09709" height="49.39321" id="svg_55" stroke="#000"/>
+  <g id="svg_56" stroke="null">
+   <rect fill="#0fff43" x="4.97568" y="11.009" width="19.31369" height="7.9367" id="svg_1" stroke="#000"/>
+   <rect fill="#0f83ff" x="4.97568" y="28.51644" width="19.31369" height="7.9367" id="svg_4" stroke="#000"/>
+   <rect fill="#41c6c6" x="5.08897" y="46.36439" width="19.31369" height="7.9367" id="svg_6" stroke="#000"/>
+   <line fill="none" x1="24.5193" y1="32.01792" x2="34.3228" y2="32.01792" id="svg_7" stroke="#000"/>
+   <line fill="none" x1="32.53093" y1="28.772" x2="35.29003" y2="32.74035" id="svg_8" stroke="#000"/>
+   <line fill="none" x1="35.20077" y1="32.02996" x2="32.37031" y2="34.9036" id="svg_9" stroke="#000"/>
+   <rect fill="#dd6c70" x="35.56981" y="28.94117" width="19.31369" height="7.9367" id="svg_10" stroke="#000"/>
+   <line fill="none" x1="24.72641" y1="14.55958" x2="46.04921" y2="14.55958" id="svg_13" stroke="#000"/>
+   <line fill="none" x1="24.53937" y1="50.14562" x2="45.71393" y2="50.14562" id="svg_14" stroke="#000"/>
+   <line fill="none" x1="45.4392" y1="14.46619" x2="45.4392" y2="28.81497" id="svg_16" stroke="#000"/>
+   <line fill="none" x1="45.70701" y1="50.07925" x2="45.70701" y2="37.28473" id="svg_17" stroke="#000"/>
+   <line fill="none" x1="45.95873" y1="37.3136" x2="48.47992" y2="39.87325" id="svg_20" stroke="#000"/>
+   <line fill="none" x1="45.70701" y1="37.03354" x2="42.95754" y2="39.82495" id="svg_21" stroke="#000"/>
+   <line fill="none" x1="45.27422" y1="28.85709" x2="42.63266" y2="26.17523" id="svg_24" stroke="#000"/>
+   <line fill="none" x1="45.49158" y1="28.91509" x2="48.1983" y2="26.16707" id="svg_26" stroke="#000"/>
+   <text fill="#000000" x="8.8499" y="17.04546" id="svg_27" stroke-width="0" font-size="6" font-family="'Crimson Pro'" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(0.942692 0 0 0.957073 1.22419 0.573103)">LC1</text>
+   <text fill="#000000" x="8.48582" y="35.49206" id="svg_28" stroke-width="0" font-size="6" font-family="'Crimson Pro'" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(0.942692 0 0 0.957073 1.22419 0.573103)">LC2</text>
+   <text fill="#000000" x="8.48582" y="54.06002" id="svg_29" stroke-width="0" font-size="6" font-family="'Crimson Pro'" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(0.942692 0 0 0.957073 1.22419 0.573103)">LC3</text>
+   <text fill="#000000" x="41.85961" y="35.9775" id="svg_30" stroke-width="0" font-size="6" font-family="'Crimson Pro'" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(0.942692 0 0 0.957073 1.22419 0.573103)">CB1</text>
+  </g>
+ </g>
+
+</svg>

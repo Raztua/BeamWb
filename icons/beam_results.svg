@@ -1,0 +1,20 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" version="1.2" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xml:space="preserve">
+ <g id="Layer_1">
+  <title>Layer 1</title>
+  <g id="svg_10">
+   <line stroke="#0000bf" stroke-dasharray="2,2" id="svg_3" y2="25.01836" x2="44.6884" y1="25.01836" x1="10.98185" stroke-width="0.2" fill="none"/>
+   <line stroke="#0000bf" stroke-dasharray="2,2" id="svg_4" y2="25.02893" x2="10.89328" y1="47.18755" x1="10.89328" stroke-width="0.2" fill="none"/>
+   <line stroke="#0000bf" stroke-dasharray="2,2" id="svg_5" y2="24.8931" x2="44.6041" y1="47.18755" x1="44.6041" stroke-width="0.2" fill="none"/>
+   <g id="svg_9">
+    <path stroke="#ff0000" stroke-width="0.9" id="svg_1" d="m14.43904,24.87135c0.31505,3.40449 -0.57998,15.89848 -3.45729,22.48657" opacity="undefined" fill="none"/>
+    <path stroke="#ff0000" id="svg_2" d="m48.07798,24.87135c0.31505,3.40449 -0.57997,15.89847 -3.45729,22.48658" opacity="undefined" stroke-width="0.9" fill="none"/>
+    <line stroke="#ff0000" id="svg_7" y2="25.06405" x2="48.57783" y1="25.06405" x1="13.8562" stroke-width="0.9" fill="none"/>
+   </g>
+  </g>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_12" y="22.42365" x="17.72344" stroke-dasharray="2,2" stroke-width="0" stroke="#0000bf" fill="#000000">DISP</text>
+  <path id="svg_13" d="m10.86402,48.89112c-0.96696,0 -1.7502,-0.64083 -1.7502,-1.43198c0,-0.79115 0.78324,-1.43198 1.7502,-1.43198c0.96696,0 1.7502,0.64083 1.7502,1.43198c0,0.79115 -0.78324,1.43198 -1.7502,1.43198z" opacity="undefined" stroke-width="0.2" stroke="#0000bf" fill="none"/>
+  <path id="svg_14" d="m14.20531,26.53628c-0.96696,0 -1.7502,-0.64084 -1.7502,-1.43199c0,-0.79115 0.78324,-1.43198 1.7502,-1.43198c0.96696,0 1.7502,0.64083 1.7502,1.43198c0,0.79115 -0.78324,1.43199 -1.7502,1.43199z" opacity="undefined" stroke-width="0.2" stroke="#0000bf" fill="none"/>
+  <path id="svg_15" d="m48.33423,26.45672c-0.96696,0 -1.7502,-0.64084 -1.7502,-1.43199c0,-0.79115 0.78324,-1.43198 1.7502,-1.43198c0.96696,0 1.7502,0.64083 1.7502,1.43198c0,0.79115 -0.78324,1.43199 -1.7502,1.43199z" opacity="undefined" stroke-width="0.2" stroke="#0000bf" fill="none"/>
+  <path id="svg_16" d="m44.75428,48.5729c-0.96696,0 -1.7502,-0.64084 -1.7502,-1.43199c0,-0.79115 0.78324,-1.43198 1.7502,-1.43198c0.96696,0 1.7502,0.64083 1.7502,1.43198c0,0.79115 -0.78324,1.43199 -1.7502,1.43199z" opacity="undefined" stroke-width="0.2" stroke="#0000bf" fill="none"/>
+ </g>
+</svg>
