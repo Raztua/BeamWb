@@ -1,8 +1,0 @@
-<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
- <g>
-  <title>Layer 1</title>
-  <circle cx="32" cy="32" r="10" fill="#3498db" stroke="#333333" stroke-width="4"/>
-  <circle cx="34" cy="28" r="2.5" fill="#ffffff" opacity="0.6"/>
-  <text stroke="#333333" xml:space="preserve" text-anchor="start" font-family="'Arimo'" font-size="40" id="svg_4" y="32" x="2" fill="#3498db">?</text>
- </g>
-</svg>
