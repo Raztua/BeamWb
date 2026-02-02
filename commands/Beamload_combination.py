@@ -25,72 +25,67 @@ from . import BeamTools
 from PySide import QtCore
 
 translate = App.Qt.translate
+import Spreadsheet
+from features.LoadCombination import LoadCombinationViewProvider, LoadCombination
+
+# commands.LoadCombination.py
 
 
-class CreateBeamCommand:
-    """Command to create beams between nodes"""
-
-    def GetResources(self):
-        return {
-            "Pixmap": os.path.join(BeamTools.getBeamModulePath(), "icons", "beam.svg"),
-            "MenuText": translate("BeamWorkbench", "Create Beam"),
-            "ToolTip": translate(
-                "BeamWorkbench", "Creates a new beam between two nodes"
-            ),
-            "Accel": "B, B",
-        }
-
-    def Activated(self):
-        """Execute when the command is clicked"""
-        from ui.dialog import (
-            show_beam_creator,
-        )  # Local import to prevent circular imports
-
-        show_beam_creator()
-
-    def IsActive(self):
-        """Determine if the command should be active"""
-        if App.ActiveDocument is None:
-            return False
-        if not hasattr(App.ActiveDocument, "Nodes"):
-            return False
-        if not (hasattr(App.ActiveDocument, "Analysis")):
-            return False
-        if App.ActiveDocument.Nodes is None:
-            return False
-        if (
-            len(App.ActiveDocument.Nodes.Group) < 2
-        ):  # Need at least 2 nodes to create a beam
-            return False
-        return True
-
-
-class ModifyBeamCommand:
-    """Command to modify existing nodes"""
+class CreateLoadCombinationCommand:
+    """Command to create a new Load Combination spreadsheet"""
 
     def GetResources(self):
         return {
             "Pixmap": os.path.join(
-                BeamTools.getBeamModulePath(), "icons", "beam_modify.svg"
+                BeamTools.getBeamModulePath(), "icons", "beam_load_combination.svg"
             ),
-            "MenuText": translate("BeamWorkbench", "Modify Beams"),
-            "ToolTip": translate("BeamWorkbench", "Modify selected Beams"),
-            "Accel": "B, M",
+            "MenuText": translate("BeamWorkbench", "Create Load Combination"),
+            "ToolTip": translate(
+                "BeamWorkbench", "Create a new Load Combination spreadsheet"
+            ),
         }
 
     def Activated(self):
-        """Run when command is clicked"""
-        from ui.dialog_BeamModifier import show_beam_modifier
+        doc = App.ActiveDocument
+        if not doc:
+            return
 
-        show_beam_modifier()
+        # Create spreadsheet
+        sheet = doc.addObject("Spreadsheet::Sheet", "LoadCombinations")
+
+        # Get all load IDs (load cases)
+        load_ids = [
+            obj
+            for obj in doc.Objects
+            if hasattr(obj, "Type") and obj.Type == "LoadIDFeature"
+        ]
+
+        if not load_ids:
+            return
+
+        # Create header row
+        sheet.set("A1", "Combination Name")
+        for col, load_id in enumerate(load_ids, start=1):
+            sheet.set("{0}1".format(chr(65 + col)), load_id.Label)
+
+        # Add sample combination
+        sheet.set("A2", "Combination 1")
+        for col in range(1, len(load_ids) + 1):
+            sheet.set("{0}2".format(chr(65 + col)), "0.0")
+
+        # Create load combination object
+        comb = doc.addObject("App::FeaturePython", "LoadCombination")
+        LoadCombination(comb)
+        comb.Spreadsheet = sheet
+        LoadCombinationViewProvider(comb.ViewObject)
+
+        # Open spreadsheet in editor
+        Gui.Selection.clearSelection()
+        Gui.Selection.addSelection(sheet)
+        Gui.runCommand("Std_Spreadsheet", 0)
 
     def IsActive(self):
-        """Determine if command should be active"""
+        if not (hasattr(App.ActiveDocument, "Analysis")):
+            return False
         return App.ActiveDocument is not None
-
-
-# Only register the command if we're running in FreeCAD
-if App.GuiUp:
-    Gui.addCommand("CreateBeam", CreateBeamCommand())
-    Gui.addCommand("ModifyBeam", ModifyBeamCommand())
 

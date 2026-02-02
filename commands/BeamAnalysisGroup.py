@@ -25,72 +25,37 @@ from . import BeamTools
 from PySide import QtCore
 
 translate = App.Qt.translate
+# from ui.dialog import show_beam_creator
 
 
-class CreateBeamCommand:
+class CreateAnalysisGroupCommand:
     """Command to create beams between nodes"""
 
     def GetResources(self):
         return {
-            "Pixmap": os.path.join(BeamTools.getBeamModulePath(), "icons", "beam.svg"),
-            "MenuText": translate("BeamWorkbench", "Create Beam"),
-            "ToolTip": translate(
-                "BeamWorkbench", "Creates a new beam between two nodes"
+            "Pixmap": os.path.join(
+                BeamTools.getBeamModulePath(), "icons", "beam_Analysis_group.svg"
             ),
-            "Accel": "B, B",
+            "MenuText": translate("BeamWorkbench", "Create Analysis Container"),
+            "ToolTip": translate("BeamWorkbench", "Creates a analysis container"),
         }
 
     def Activated(self):
         """Execute when the command is clicked"""
-        from ui.dialog import (
-            show_beam_creator,
-        )  # Local import to prevent circular imports
+        from features.AnalysisGroup import get_analysis_group
 
-        show_beam_creator()
+        get_analysis_group()
 
     def IsActive(self):
         """Determine if the command should be active"""
         if App.ActiveDocument is None:
             return False
-        if not hasattr(App.ActiveDocument, "Nodes"):
-            return False
-        if not (hasattr(App.ActiveDocument, "Analysis")):
-            return False
-        if App.ActiveDocument.Nodes is None:
-            return False
-        if (
-            len(App.ActiveDocument.Nodes.Group) < 2
-        ):  # Need at least 2 nodes to create a beam
+        if hasattr(App.ActiveDocument, "AnalysisGroup"):
             return False
         return True
 
 
-class ModifyBeamCommand:
-    """Command to modify existing nodes"""
-
-    def GetResources(self):
-        return {
-            "Pixmap": os.path.join(
-                BeamTools.getBeamModulePath(), "icons", "beam_modify.svg"
-            ),
-            "MenuText": translate("BeamWorkbench", "Modify Beams"),
-            "ToolTip": translate("BeamWorkbench", "Modify selected Beams"),
-            "Accel": "B, M",
-        }
-
-    def Activated(self):
-        """Run when command is clicked"""
-        from ui.dialog_BeamModifier import show_beam_modifier
-
-        show_beam_modifier()
-
-    def IsActive(self):
-        """Determine if command should be active"""
-        return App.ActiveDocument is not None
-
-
 # Only register the command if we're running in FreeCAD
 if App.GuiUp:
-    Gui.addCommand("CreateBeam", CreateBeamCommand())
-    Gui.addCommand("ModifyBeam", ModifyBeamCommand())
+    Gui.addCommand("CreateAnalysisGroup", CreateAnalysisGroupCommand())
 

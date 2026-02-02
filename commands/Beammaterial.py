@@ -27,70 +27,33 @@ from PySide import QtCore
 translate = App.Qt.translate
 
 
-class CreateBeamCommand:
-    """Command to create beams between nodes"""
-
-    def GetResources(self):
-        return {
-            "Pixmap": os.path.join(BeamTools.getBeamModulePath(), "icons", "beam.svg"),
-            "MenuText": translate("BeamWorkbench", "Create Beam"),
-            "ToolTip": translate(
-                "BeamWorkbench", "Creates a new beam between two nodes"
-            ),
-            "Accel": "B, B",
-        }
-
-    def Activated(self):
-        """Execute when the command is clicked"""
-        from ui.dialog import (
-            show_beam_creator,
-        )  # Local import to prevent circular imports
-
-        show_beam_creator()
-
-    def IsActive(self):
-        """Determine if the command should be active"""
-        if App.ActiveDocument is None:
-            return False
-        if not hasattr(App.ActiveDocument, "Nodes"):
-            return False
-        if not (hasattr(App.ActiveDocument, "Analysis")):
-            return False
-        if App.ActiveDocument.Nodes is None:
-            return False
-        if (
-            len(App.ActiveDocument.Nodes.Group) < 2
-        ):  # Need at least 2 nodes to create a beam
-            return False
-        return True
-
-
-class ModifyBeamCommand:
-    """Command to modify existing nodes"""
+class CreateMaterialCommand:
+    """Command to create materials"""
 
     def GetResources(self):
         return {
             "Pixmap": os.path.join(
-                BeamTools.getBeamModulePath(), "icons", "beam_modify.svg"
+                BeamTools.getBeamModulePath(), "icons", "beam_material.svg"
             ),
-            "MenuText": translate("BeamWorkbench", "Modify Beams"),
-            "ToolTip": translate("BeamWorkbench", "Modify selected Beams"),
-            "Accel": "B, M",
+            "MenuText": translate("BeamWorkbench", "Create Material"),
+            "ToolTip": translate(
+                "BeamWorkbench", "Create material properties for beams"
+            ),
+            "Accel": "M, A",
         }
 
     def Activated(self):
         """Run when command is clicked"""
-        from ui.dialog_BeamModifier import show_beam_modifier
+        from ui.dialog_MaterialCreator import MaterialCreatorTaskPanel
 
-        show_beam_modifier()
+        panel = MaterialCreatorTaskPanel()
+        Gui.Control.showDialog(panel)
 
     def IsActive(self):
         """Determine if command should be active"""
         return App.ActiveDocument is not None
 
 
-# Only register the command if we're running in FreeCAD
-if App.GuiUp:
-    Gui.addCommand("CreateBeam", CreateBeamCommand())
-    Gui.addCommand("ModifyBeam", ModifyBeamCommand())
+# Add command to FreeCAD
+Gui.addCommand("CreateMaterial", CreateMaterialCommand())
 
