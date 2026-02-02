@@ -1,68 +1,111 @@
-import FreeCADGui as Gui
-import os
-import FreeCAD
+# ***************************************************************************
+# *                                                                         *
+# *   Copyright (c) 2026                                                    *
+# *                                                                         *
+# *   This program is free software: you can redistribute it and/or modify  *
+# *   it under the terms of the GNU Lesser General Public License as        *
+# *   published by the Free Software Foundation, either version 3 of the    *
+# *   License, or (at your option) any later version.                       *
+# *                                                                         *
+# *   This program is distributed in the hope that it will be useful,       *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+# *   GNU Lesser General Public License for more details.                   *
+# *                                                                         *
+# *   You should have received a copy of the GNU Lesser General Public      *
+# *   License along with this program.  If not,                             *
+# *   see <https://www.gnu.org/licenses/>.                                  *
+# *                                                                         *
+# ***************************************************************************
 
-class BeamWB(Gui.Workbench):
+import sys
+
+
+class BeamWB(Workbench):
     """FEM Workbench class"""
+
     MenuText = "Beam Workbench"
     ToolTip = "A workbench for Beam FEM modeling"
 
     def __init__(self):
+        import os
+        from commands import BeamTools
+        from PySide import QtCore
+
+        translate = FreeCAD.Qt.translate
+
         # Get the directory containing this file
-        self.__class__.Icon = self.get_icon_path("workbench_icon.svg")
+        icon_path = os.path.join(
+            BeamTools.getBeamModulePath(), "icons", "beam_workbench.svg"
+        )
+        self.__class__.Icon = icon_path
+        self.__class__.MenuText = translate("BeamWorkbench", "Beam Workbench")
+        self.__class__.ToolTip = translate(
+            "BeamWorkbench", "A workbench for Beam FEM modeling"
+        )
+
+        icons_path = os.path.join(BeamTools.getBeamModulePath(), "icons")
+        QtCore.QDir.addSearchPath("icons", icons_path)
 
     def Initialize(self):
         """Initialize the workbench with lazy imports"""
         # Import commands only when needed
-        from commands.nodes import ManageNodesCommand, ModifyNodeCommand,OffsetNodeCommand,CreateNodeCommand
-        from commands.sections import CreateSectionCommand
-        from commands.loads import CreateLoadIDCommand, CreateNodalLoadCommand,CreateMemberLoadCommand,CreateAccelerationLoadCommand
+        from commands.Beamnodes import (
+            ManageNodesCommand,
+            ModifyNodeCommand,
+            OffsetNodeCommand,
+            CreateNodeCommand,
+        )
+        from commands.Beamsections import CreateSectionCommand
+        from commands.Beamloads import (
+            CreateLoadIDCommand,
+            CreateNodalLoadCommand,
+            CreateMemberLoadCommand,
+            CreateAccelerationLoadCommand,
+        )
         from commands.beams import CreateBeamCommand, ModifyBeamCommand
-        from commands.test import TestCommand
-        from commands.load_combination import CreateLoadCombinationCommand
-        from commands.boundary_conditions import CreateBoundaryConditionCommand
-        from commands.AnalysisGroup import CreateAnalysisGroupCommand
-        from commands.member_releases import CreateMemberReleaseCommand
-        from commands.run_analysis import AnalysisCommand
-        from commands.material import CreateMaterialCommand
-        from commands.ItemLabeling import ItemLabelingCommand
+        from commands.Beamtest import TestCommand
+        from commands.Beamload_combination import CreateLoadCombinationCommand
+        from commands.Beamboundary_conditions import CreateBoundaryConditionCommand
+        from commands.BeamAnalysisGroup import CreateAnalysisGroupCommand
+        from commands.Beammember_releases import CreateMemberReleaseCommand
+        from commands.Beamrun_analysis import AnalysisCommand
+        from commands.Beammaterial import CreateMaterialCommand
+        from commands.BeamItemLabeling import ItemLabelingCommand
         from commands.BeamColorizer import BeamColorizerCommand
-        from commands.CodeCheck import CreateCodeCheckCommand
-        from commands.results_viewer import ResultsViewerCommand
-        from commands.solver import AnalysisCommand
+        from commands.BeamCodeCheck import CreateCodeCheckCommand
+        from commands.Beamresults_viewer import ResultsViewerCommand
+        from commands.Beamsolver import AnalysisCommand
+
         # Define command lists for each category
         model_setup_commands = [
-            'CreateAnalysisGroup',
-            'ManageNodes',
-            'CreateNode',
-            'ModifyNode',
-            'OffsetNode',
-            'CreateSection',
-            'CreateMaterial',
-            'CreateBeam',
-            'ModifyBeam'
+            "CreateAnalysisGroup",
+            "ManageNodes",
+            "CreateNode",
+            "ModifyNode",
+            "OffsetNode",
+            "CreateSection",
+            "CreateMaterial",
+            "CreateBeam",
+            "ModifyBeam",
         ]
 
         loads_bc_commands = [
-            'CreateBoundaryCondition',
-            'CreateMemberRelease',
-            'CreateLoadID',
-            'CreateNodalLoad',
-            'CreateMemberLoad',
-            'CreateAccelerationLoad',
-            'CreateLoadCombination'
+            "CreateBoundaryCondition",
+            "CreateMemberRelease",
+            "CreateLoadID",
+            "CreateNodalLoad",
+            "CreateMemberLoad",
+            "CreateAccelerationLoad",
+            "CreateLoadCombination",
         ]
 
         analysis_commands = [
-            'AnalysisCommand',  # This is the new merged command
-            'ResultsViewer'
+            "AnalysisCommand",  # This is the new merged command
+            "ResultsViewer",
         ]
 
-        post_processing_commands = [
-            'RunCodeCheck',
-            'ItemLabeling',
-            'BeamColorizer'
-        ]
+        post_processing_commands = ["RunCodeCheck", "ItemLabeling", "BeamColorizer"]
 
         # Append toolbars and menus for each category
         self.appendToolbar("Model Setup", model_setup_commands)
@@ -76,23 +119,20 @@ class BeamWB(Gui.Workbench):
 
         self.appendToolbar("Post-Processing", post_processing_commands)
         self.appendMenu("Post-Processing", post_processing_commands)
-#
-    
-    def get_icon_path(self, icon_name):
-        """Helper method to get absolute path to icons"""
-        # Get the directory containing this file
-        wb_path = os.path.dirname(__file__) if '__file__' in globals() else os.path.join(
-            FreeCAD.getUserAppDataDir(), "Mod", "BeamWB")
-        return os.path.join(wb_path, "icons", icon_name)
-    
-   
+
+    #
+
     def Activated(self):
         """When workbench is activated"""
         pass
-    
+
     def Deactivated(self):
         """When workbench is deactivated"""
         pass
 
+    def GetClassName(self):
+        return "Gui::PythonWorkbench"
+
+
 # Add the workbench to FreeCAD
-Gui.addWorkbench(BeamWB())
+FreeCADGui.addWorkbench(BeamWB())
