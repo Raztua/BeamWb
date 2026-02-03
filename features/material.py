@@ -10,8 +10,8 @@ WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
 
 # Constants
-MATERIAL_ICON_PATH = os.path.join(ICON_DIR, "material_icon.svg")
-MATERIAL_GROUP_ICON_PATH = os.path.join(ICON_DIR, "material_group_icon.svg")
+MATERIAL_ICON_PATH = os.path.join(ICON_DIR, "beam_material.svg")
+MATERIAL_GROUP_ICON_PATH = os.path.join(ICON_DIR, "beam_material_group.svg")
 
 # Standard steel material database (values in MPa, kg/m³)
 STANDARD_STEELS = {

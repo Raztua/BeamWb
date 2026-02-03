@@ -10,7 +10,7 @@ from features.beams import make_result_beams_group
 # Constants
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-SOLVER_ICON_PATH = os.path.join(ICON_DIR, "solver_icon.svg")
+SOLVER_ICON_PATH = os.path.join(ICON_DIR, "beam_solver.svg")
 
 DIAGRAM_TYPE_MAP = MEMBER_RESULT_KEYS
 DIAGRAM_TYPES = ["None"] + list(DIAGRAM_TYPE_MAP.keys())

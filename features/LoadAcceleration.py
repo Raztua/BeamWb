@@ -6,7 +6,7 @@ from features.FEMVisualization import FEMVisualization
 # Constants
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-ACCCELERATION_LOAD_ICON_PATH = os.path.join(ICON_DIR, "acceleration_load_icon.svg")
+ACCCELERATION_LOAD_ICON_PATH = os.path.join(ICON_DIR, "beam_acceleration_load.svg")
 
 class AccelerationLoad:
     def __init__(self, obj):

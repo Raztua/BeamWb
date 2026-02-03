@@ -8,7 +8,7 @@ import math
 # Constants
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-MEMBER_LOAD_ICON_PATH = os.path.join(ICON_DIR, "member_load_icon.svg")
+MEMBER_LOAD_ICON_PATH = os.path.join(ICON_DIR, "beam_member_load.svg")
 
 
 class MemberLoad:

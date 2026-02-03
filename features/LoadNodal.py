@@ -8,7 +8,7 @@ from features.FEMVisualization import FEMVisualization
 # Constants
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-NODAL_LOAD_ICON_PATH = os.path.join(ICON_DIR, "nodal_load_icon.svg")
+NODAL_LOAD_ICON_PATH = os.path.join(ICON_DIR, "beam_nodal_load.svg")
 
 class NodalLoad:
     def __init__(self, obj):

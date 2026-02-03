@@ -21,8 +21,8 @@ ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
 # Constants
 PROFILE_TYPES = ["I-Shape", "H-Shape", "L-Shape", "U-Shape", "T-Shape",
                  "Rectangle", "Round Bar", "Tubular", "HSS", "C-Shape"]
-SECTION_ICON_PATH = os.path.join(ICON_DIR, "section_icon.svg")
-SECTION_GROUP_ICON_PATH = os.path.join(ICON_DIR, "section_group_icon.svg")
+SECTION_ICON_PATH = os.path.join(ICON_DIR, "beam_section.svg")
+SECTION_GROUP_ICON_PATH = os.path.join(ICON_DIR, "beam_section_group.svg")
 
 # Predefined colors for sections
 SECTION_COLORS = [

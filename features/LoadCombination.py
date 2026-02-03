@@ -6,7 +6,7 @@ from prettytable.prettytable import PrettyTable, HRuleStyle, VRuleStyle, TableSt
 
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-LOAD_COMB_ICON_PATH = os.path.join(ICON_DIR, "load_combination_icon.svg")
+LOAD_COMB_ICON_PATH = os.path.join(ICON_DIR, "beam_load_combination.svg")
 
 
 class LoadCombination:
@@ -101,7 +101,7 @@ class LoadCombinationGroupViewProvider:
         vobj.Proxy = self
 
     def getIcon(self):
-        return os.path.join(ICON_DIR, "load_combination_group_icon.svg")
+        return os.path.join(ICON_DIR, "beam_load_combination_group.svg")
 
     def attach(self, vobj):
         self.ViewObject = vobj

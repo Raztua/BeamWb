@@ -16,8 +16,8 @@ except ImportError:
 # Constants
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-BOUNDARY_CONDITION_ICON_PATH = os.path.join(ICON_DIR, "boundary_condition_icon.svg")
-BOUNDARY_GROUP_ICON_PATH = os.path.join(ICON_DIR, "boundary_group_icon.svg")
+BOUNDARY_CONDITION_ICON_PATH = os.path.join(ICON_DIR, "beam_boundary_condition.svg")
+BOUNDARY_GROUP_ICON_PATH = os.path.join(ICON_DIR, "beam_boundary_group.svg")
 
 
 class BoundaryConditionFeature:

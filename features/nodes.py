@@ -22,9 +22,9 @@ except ImportError:
 # Constants
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-NODE_ICON_PATH = os.path.join(ICON_DIR, "node_icon.svg")
-NODE_GROUP_ICON_PATH = os.path.join(ICON_DIR, "node_group_icon.svg")
-NODE_GROUP_RESULTS_ICON_PATH = os.path.join(ICON_DIR, "node_results_icon.svg")
+NODE_ICON_PATH = os.path.join(ICON_DIR, "beam_node.svg")
+NODE_GROUP_ICON_PATH = os.path.join(ICON_DIR, "beam_node_group.svg")
+NODE_GROUP_RESULTS_ICON_PATH = os.path.join(ICON_DIR, "beam_node_results.svg")
 
 
 class NodeFeature(Point):

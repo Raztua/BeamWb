@@ -7,8 +7,8 @@ import os
 # Constants
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-MEMBER_RELEASE_ICON_PATH = os.path.join(ICON_DIR, "member_release_icon.svg")
-MEMBER_RELEASE_GROUP_ICON_PATH = os.path.join(ICON_DIR, "member_release_group_icon.svg")
+MEMBER_RELEASE_ICON_PATH = os.path.join(ICON_DIR, "beam_member_release.svg")
+MEMBER_RELEASE_GROUP_ICON_PATH = os.path.join(ICON_DIR, "beam_member_release_group.svg")
 
 
 class MemberReleaseFeature:

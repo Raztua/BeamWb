@@ -7,8 +7,8 @@ from prettytable.prettytable import PrettyTable, HRuleStyle, VRuleStyle, TableSt
 
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-LOAD_GROUP_ICON_PATH = os.path.join(ICON_DIR, "load_group_icon.svg")
-LOAD_ID_ICON_PATH = os.path.join(ICON_DIR, "load_ID_icon.svg")
+LOAD_GROUP_ICON_PATH = os.path.join(ICON_DIR, "beam_load_group.svg")
+LOAD_ID_ICON_PATH = os.path.join(ICON_DIR, "beam_load_ID.svg")
 
 
 # Load group is the global load group

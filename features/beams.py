@@ -17,8 +17,8 @@ except ImportError:
 # Constants
 WORKBENCH_DIR = os.path.dirname(os.path.dirname(__file__))
 ICON_DIR = os.path.join(WORKBENCH_DIR, "icons")
-BEAM_GROUP_ICON_PATH = os.path.join(ICON_DIR, "beam_group_icon.svg")
-BEAM_ICON_PATH = os.path.join(ICON_DIR, "beam_icon.svg")
+BEAM_GROUP_ICON_PATH = os.path.join(ICON_DIR, "beam_group.svg")
+BEAM_ICON_PATH = os.path.join(ICON_DIR, "beam.svg")
 BEAM_GROUP_RESULTS_ICON_PATH = NODE_GROUP_RESULTS_ICON_PATH = os.path.join(ICON_DIR, "node_results_icon.svg")
 
 
