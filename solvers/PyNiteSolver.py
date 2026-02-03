@@ -173,37 +173,6 @@ class PyNiteSolverEngine(BaseSolverEngine):
 
         App.Console.PrintMessage(header + member_table.get_string() + "\n")
 
-        # --- Detailed Matrix Inspection ---
-        App.Console.PrintMessage("\n--- 4b. Member Transformation Matrices (T) ---\n")
-        App.Console.PrintMessage("Note: This 12x12 matrix transforms global displacements to local displacements.\n")
-
-        for mem_name, mem in self.pynite_model.members.items():
-            try:
-                # Access the transformation matrix
-                # PyNite calculates this during the solve process or on demand
-                T = mem.T()
-
-                App.Console.PrintMessage(f"\n>> Member: {mem_name} (Rotation: {mem.rotation}°)\n")
-
-                # Create a table to display the matrix beautifully
-                t_table = PrettyTable()
-                t_table.header = False  # No header for raw matrix
-                t_table.set_style(TableStyle.SINGLE_BORDER)
-
-                for row in T:
-                    # Format each float in the row to 3 decimal places
-                    t_table.add_row([f"{val: .3f}" for val in row])
-
-                App.Console.PrintMessage(t_table.get_string() + "\n")
-
-                # Check for Singularities
-                # If the member is vertical and rotation is 90, check the diagonals
-                if np.all(T == 0):
-                    App.Console.PrintWarning(f"WARNING: Transformation Matrix for {mem_name} is null!\n")
-
-            except Exception as e:
-                App.Console.PrintError(f"Could not print matrix for {mem_name}: {str(e)}\n")
-
     def _print_loads_and_combos(self):
         """Prints summaries for Loads and Load Combinations."""
         # --- 5. LOADS (CASES) ---
@@ -498,7 +467,9 @@ class PyNiteSolverEngine(BaseSolverEngine):
     def _add_load_case(self, load_case):
         """Add loads nested under a load case."""
         case_name = load_case.Label
+        print("add loadcade ",case_name)
         for child in load_case.Group:
+            print("child type",getattr(child, "Type", ""))
             if getattr(child, "Type", "") == "NodalLoad":
                 # Nodal forces are assumed to be in N (PyNite default)
                 for node in child.Nodes:
@@ -522,18 +493,19 @@ class PyNiteSolverEngine(BaseSolverEngine):
                 if not getattr(child, "LocalCS", False): axis_map = {'X': 'FX', 'Y': 'FY', 'Z': 'FZ'}
 
                 for beam in child.Beams:
+                    length_beam =beam.Length.getValueAs('m').Value
                     start_f = getattr(child, "StartForce", (0.0, 0.0, 0.0))
                     end_f = getattr(child, "EndForce", (0.0, 0.0, 0.0))
                     start_pos = getattr(child, "StartPosition", 0.0)
                     end_pos = getattr(child, "EndPosition", 1.0)
                     for i, axis in enumerate(['X', 'Y', 'Z']):
-                        print("i:",i,"axis",axis,"axis_map",axis_map[axis])
                         if not (start_f[i] == 0.0 and end_f[i] == 0.0):
-                            # Convert distributed load from FreeCAD unit (assumed N/mm) to N/m
+                            # Convert distributed load from FreeCAD unit  #too complex, may be optimized
                             start_val = Units.Quantity(start_f[i], 'N/mm').getValueAs('N/m').Value
                             end_val = Units.Quantity(end_f[i], 'N/mm').getValueAs('N/m').Value
                             self.pynite_model.add_member_dist_load(beam.Name, axis_map[axis],
-                                                                   end_val, start_val, start_pos, end_pos, case_name)
+                                                                   end_val, start_val, start_pos*length_beam,
+                                                                   end_pos*length_beam, case_name)
 
             elif getattr(child, "Type", "") == "AccelerationLoad":
                 acc_vector = getattr(child, "LinearAcceleration", App.Vector(0, 0, 0))
