@@ -26,6 +26,7 @@ class FEMVisualization:
         """Create a force arrow with position support"""
         root_sep = coin.SoSeparator()
         force_vec=App.Vector(force[0],force[1],force[2])
+        scale=scale*10
         try:
             if not hasattr(force_vec, 'Length'):
                 return root_sep
@@ -223,7 +224,7 @@ class FEMVisualization:
                 # Point arrow toward the beam (reverse direction)
                 force_arrow = FEMVisualization.create_force_arrow(
                     force, pos,
-                    scale=load_scale,
+                    scale=load_scale*10,
                     color=load_color)
                 member_node.addChild(force_arrow)
         # Calculate intermediate forces (linear interpolation)
@@ -236,7 +237,7 @@ class FEMVisualization:
                 # Point arrow toward the beam (reverse direction)
                 moment_symbol = FEMVisualization.create_moment_symbol(
                     moment, pos,
-                    scale=load_scale,
+                    scale=load_scale/20,
                     color=moment_color)
                 member_node.addChild(moment_symbol)
         return member_node
