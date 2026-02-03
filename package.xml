@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<package format="1">
+    <name>BeamWb</name>
+    <description>A workbench for Beam FEM modeling</description>
+    <version>0.1.1</version>
+    <maintainer email="">Pierre V</maintainer>
+    <license file="LICENSE">LGPL-2.0-or-later</license>
+    <url type="repository" branch="main">https://https://github.com/Raztua/BeamWb</url>
+    <url type="documentation">https://https://github.com/Raztua/BeamWb/README.md</url>
+    <freecadmin>0.20.0</freecadmin>
+    <content>
+        <workbench>
+            <classname>BeamWB</classname>
+            <subdirectory>./</subdirectory>
+            <icon>icons/beam_workbench.svg</icon>
+        </workbench>
+    </content>
+</package>

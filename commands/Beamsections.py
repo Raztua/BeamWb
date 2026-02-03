@@ -26,71 +26,34 @@ from PySide import QtCore
 
 translate = App.Qt.translate
 
-
-class CreateBeamCommand:
-    """Command to create beams between nodes"""
-
-    def GetResources(self):
-        return {
-            "Pixmap": os.path.join(BeamTools.getBeamModulePath(), "icons", "beam.svg"),
-            "MenuText": translate("BeamWorkbench", "Create Beam"),
-            "ToolTip": translate(
-                "BeamWorkbench", "Creates a new beam between two nodes"
-            ),
-            "Accel": "B, B",
-        }
-
-    def Activated(self):
-        """Execute when the command is clicked"""
-        from ui.dialog import (
-            show_beam_creator,
-        )  # Local import to prevent circular imports
-
-        show_beam_creator()
-
-    def IsActive(self):
-        """Determine if the command should be active"""
-        if App.ActiveDocument is None:
-            return False
-        if not hasattr(App.ActiveDocument, "Nodes"):
-            return False
-        if not (hasattr(App.ActiveDocument, "Analysis")):
-            return False
-        if App.ActiveDocument.Nodes is None:
-            return False
-        if (
-            len(App.ActiveDocument.Nodes.Group) < 2
-        ):  # Need at least 2 nodes to create a beam
-            return False
-        return True
+from ui.dialog import show_section_creator
 
 
-class ModifyBeamCommand:
-    """Command to modify existing nodes"""
+class CreateSectionCommand:
+    """Command to create sections"""
 
     def GetResources(self):
         return {
             "Pixmap": os.path.join(
-                BeamTools.getBeamModulePath(), "icons", "beam_modify.svg"
+                BeamTools.getBeamModulePath(), "icons", "beam_section.svg"
             ),
-            "MenuText": translate("BeamWorkbench", "Modify Beams"),
-            "ToolTip": translate("BeamWorkbench", "Modify selected Beams"),
-            "Accel": "B, M",
+            "MenuText": translate("BeamWorkbench", "Create Section"),
+            "ToolTip": translate("BeamWorkbench", "Creates a new cross-section"),
+            "Accel": "S, S",
         }
 
     def Activated(self):
         """Run when command is clicked"""
-        from ui.dialog_BeamModifier import show_beam_modifier
-
-        show_beam_modifier()
+        show_section_creator()  # Now shows task panel
 
     def IsActive(self):
         """Determine if command should be active"""
+        if not (hasattr(App.ActiveDocument, "Analysis")):
+            return False
         return App.ActiveDocument is not None
 
 
-# Only register the command if we're running in FreeCAD
+# Add command to FreeCAD
 if App.GuiUp:
-    Gui.addCommand("CreateBeam", CreateBeamCommand())
-    Gui.addCommand("ModifyBeam", ModifyBeamCommand())
+    Gui.addCommand("CreateSection", CreateSectionCommand())
 
