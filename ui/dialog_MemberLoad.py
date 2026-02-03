@@ -151,7 +151,7 @@ class MemberLoadTaskPanel:
             
             # Start Moment
             sm_in = QtGui.QLineEdit()
-            sm_in.setPlaceholderText("Nm/m")
+            sm_in.setPlaceholderText("kN*m/m")
             sm_in.editingFinished.connect(lambda c=coord: self.add_unit_if_needed(f"start_moment_{c.lower()}"))
             sm_in.textChanged.connect(self.copy_start_to_end)
             setattr(self, f"start_moment_{coord.lower()}_input", sm_in)
@@ -159,7 +159,7 @@ class MemberLoadTaskPanel:
 
             # End Moment
             em_in = QtGui.QLineEdit()
-            em_in.setPlaceholderText("Nm/m")
+            em_in.setPlaceholderText("kN*m/m")
             em_in.editingFinished.connect(lambda c=coord: self.add_unit_if_needed(f"end_moment_{c.lower()}"))
             setattr(self, f"end_moment_{coord.lower()}_input", em_in)
             load_layout.addWidget(em_in, row, 2)
@@ -179,7 +179,7 @@ class MemberLoadTaskPanel:
             if 'force' in field_name:
                 line_edit.setText(f"{text} kN/m")
             elif 'moment' in field_name:
-                line_edit.setText(f"{text} Nm/m")
+                line_edit.setText(f"{text} kN*m/m")
 
     def parse_distributed_force(self, text):
         """Parse input for Force per Length (N/mm in FreeCAD internal, usually kN/m)"""
@@ -188,7 +188,7 @@ class MemberLoadTaskPanel:
             q = Units.Quantity(text)
             # Line loads are often internally 'ForcePerLength' or similar
             # We convert to N/m for the solver/manager
-            return q.getValueAs('N/m')
+            return q.getValueAs('N/mm')
         except Exception:
             QtGui.QMessageBox.warning(self.form, "Unit Error", f"Invalid Force/Length: {text}. Use kN/m or N/m")
             return None
@@ -200,9 +200,9 @@ class MemberLoadTaskPanel:
             q = Units.Quantity(text)
             # Moment is Force*Length, so Moment/Length is effectively just Force units (N) 
             # or custom. We ensure we return the value in Nm/m.
-            return q.getValueAs('N*m/m') 
+            return q.getValueAs('N*mm/mm')
         except Exception:
-            QtGui.QMessageBox.warning(self.form, "Unit Error", f"Invalid Moment/Length: {text}. Use Nm/m")
+            QtGui.QMessageBox.warning(self.form, "Unit Error", f"Invalid Moment/Length: {text}. Use N*m/m or kN*m/m")
             return None
 
     def on_equal_load_changed(self, state):
@@ -351,13 +351,15 @@ class MemberLoadTaskPanel:
         
         # Display as kN/m (dividing internal N/m by 1000)
         sf = ml.StartForce
-        self.start_force_x_input.setText(f"{sf.x/1000:.3f} kN/m")
-        self.start_force_y_input.setText(f"{sf.y/1000:.3f} kN/m")
-        self.start_force_z_input.setText(f"{sf.z/1000:.3f} kN/m")
+        self.start_force_x_input.setText(f"{sf.x:.3f} kN/m")
+        self.start_force_y_input.setText(f"{sf.y:.3f} kN/m")
+        self.start_force_z_input.setText(f"{sf.z:.3f} kN/m")
         # Display Moments as Nm/m
         sm = ml.StartMoment
-        self.start_moment_x_input.setText(f"{sm.x:.3f} Nm/m")
-        # ... repeat for other fields ...
+        self.start_moment_x_input.setText(f"{sm.x/1000:.3f} kN*m/m")
+        self.start_moment_y_input.setText(f"{sm.y/1000:.3f} kN*m/m")
+        self.start_moment_z_input.setText(f"{sm.z/1000:.3f} kN*m/m")
+
 
     def getStandardButtons(self):
         return QtGui.QDialogButtonBox.Apply | QtGui.QDialogButtonBox.Close
