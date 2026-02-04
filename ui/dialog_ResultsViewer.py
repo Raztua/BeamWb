@@ -62,8 +62,8 @@ class ResultsViewerTaskPanel:
 
         deform_layout.addWidget(QtGui.QLabel("Scale Factor:"), 0, 0)
         self.deform_scale = QtGui.QDoubleSpinBox()
-        self.deform_scale.setRange(0.0, 100.0)
-        self.deform_scale.setValue(1.0)
+        self.deform_scale.setRange(0.0, 1000.0)
+        self.deform_scale.setValue(10.0)
         self.deform_scale.setSingleStep(0.1)
         self.deform_scale.setDecimals(2)
         self.deform_scale.valueChanged.connect(self.on_deform_scale_changed)
@@ -84,8 +84,8 @@ class ResultsViewerTaskPanel:
 
         diagram_layout.addWidget(QtGui.QLabel("Scale Factor:"), 1, 0)
         self.diagram_scale = QtGui.QDoubleSpinBox()
-        self.diagram_scale.setRange(0.0, 10.0)
-        self.diagram_scale.setValue(1.0)
+        self.diagram_scale.setRange(0.0, 100.0)
+        self.diagram_scale.setValue(1)
         self.diagram_scale.setSingleStep(0.1)
         self.diagram_scale.setDecimals(2)
         self.diagram_scale.valueChanged.connect(self.on_diagram_scale_changed)

@@ -223,18 +223,25 @@ class Solver():
     def _update_result_properties(self, obj):
         # Update dropdown list with all available cases
         if obj.Results and obj.Results.load_cases:
-            obj.LoadCase = list(obj.Results.load_cases.keys())
+            obj.LoadCase = list(obj.Results.load_cases.keys())+ ["Envelope"]
         else:
             obj.LoadCase = ["None"]
 
     def _update_results(self, obj):
-        # Updates VISUALIZATION only
         if not obj.Results.load_cases: return
         lc = obj.LoadCase
-        if lc == "None" or lc not in obj.Results.load_cases: return
+
+        if lc == "None": return
+
+        # Check if Envelope is selected
+        if lc == "Envelope":
+            # You need to implement Envelope calculation logic here
+            # or extract it from a pre-calculated envelope in FEMResult
+            App.Console.PrintMessage("Envelope view not yet fully implemented in Solver.py\n")
+            return
+        if lc not in obj.Results.load_cases: return
 
         data = obj.Results.load_cases[lc]
-
         # Update Nodes
         self._update_node_vis(obj, data.get('nodes', {}))
         # Update Beams
@@ -327,7 +334,7 @@ class Solver():
         elif "unity_check" in key:
             target_unit = ""
 
-        # Get max value for scaling
+        # Get max value for scalingg
         max_q = obj.Results.get_max_diagram_value(obj.LoadCase, key)
         # Ensure max_q is treated as a Quantity and converted to target unit
         # print("max q",max_q)
@@ -346,7 +353,7 @@ class Solver():
                 raw_quantities = d['values'][1]
 
                 # Calculate scale
-                scale_denom = max_val_float
+                scale_denom = max_val_float/obj.DiagramScale
                 if scale_denom == 0: scale_denom = 1.0
                 if key=="unity_check":
                     float_values=[q / scale_denom for q in raw_quantities]
@@ -369,7 +376,6 @@ class Solver():
 
                 unit_str = target_unit.replace('*', '·') if target_unit else ""  # Pretty formatting for UI
                 # Pass to beam proxy (adding the unit string for the UI)
-                print('float_values', float_values)
 
                 b.Proxy.set_diagram(
                     vis_positions,
@@ -382,11 +388,11 @@ class Solver():
             grp = App.ActiveDocument.getObject(g)
             if grp:
                 for i in grp.Group:
-                    if hasattr(i.ViewObject, "Proxy"):
+                    if i.ViewObject and i.ViewObject.Proxy:
                         i.ViewObject.Proxy.updateData(i, "ResultsUpdate")
 
     def onChanged(self, obj, prop):
-        if not hasattr(self, 'flagInit') or self.flagInit or 'Restore' in obj.State:
+        if (not hasattr(self, 'flagInit')) or self.flagInit or 'Restore' in obj.State:
             return
         elif prop in ["LoadCase", "DiagramType", "DiagramScale", "DeformationScale", "ShowNodeResults",
                       'ShowReactions']:
@@ -494,3 +500,18 @@ def run_analysis():
     if solver:
         solver.RunAnalysis = True
         App.ActiveDocument.recompute()
+
+
+class SolverSaveObserver:
+    def slotStartSaveDocument(self, doc, filepath):
+        # Clear result objects before any document save
+        if doc == App.ActiveDocument:
+            solver_obj = doc.getObject("Solver")
+            if solver_obj and hasattr(solver_obj.Proxy, "_clear_result_objects"):
+                solver_obj.Proxy._clear_result_objects(solver_obj)
+
+            # Register the observer (e.g., in workbench Initialize or when creating solver)
+
+
+App.addDocumentObserver(SolverSaveObserver())
+

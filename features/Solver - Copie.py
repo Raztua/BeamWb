@@ -336,12 +336,14 @@ class Solver():
                         i.ViewObject.Proxy.updateData(i, "ResultsUpdate")
 
     def onChanged(self, obj, prop):
+        print(1)
         if not hasattr(self, 'flagInit') or self.flagInit or 'Restore' in obj.State:
             return
         elif prop in ["LoadCase", "DiagramType", "DiagramScale", "DeformationScale", "ShowNodeResults",
                       'ShowReactions']:
             # Only update visualization, don't recreate objects
             self._update_results(obj)
+            print('update results')
             self.update_visualization(obj)
         elif prop == "RunAnalysis" and obj.RunAnalysis:
             # Handle RunAnalysis property change

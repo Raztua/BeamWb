@@ -59,10 +59,8 @@ class PyNiteSolverEngine(BaseSolverEngine):
         if PrettyTable is None:
             App.Console.PrintError("\nCannot check model: PrettyTable module is missing.\n")
             return
-
-        App.Console.PrintMessage("\n" + "b" * 80)
-        App.Console.PrintMessage("\n" + "=" * 80)
-        App.Console.PrintMessage(" PyNite Model Verification Report ")
+        App.Console.PrintMessage( "=" * 80+"\n" )
+        App.Console.PrintMessage(" PyNite Model Verification Report "+"\n" )
         App.Console.PrintMessage("=" * 80 + "\n")
 
         self._print_nodes_and_bcs()
@@ -72,7 +70,7 @@ class PyNiteSolverEngine(BaseSolverEngine):
         self._print_results_summary()
 
         App.Console.PrintMessage("\n","=" * 80)
-        App.Console.PrintMessage(" End of PyNite Model Verification Report ")
+        App.Console.PrintMessage(" \n  End of PyNite Model Verification Report \n")
         App.Console.PrintMessage("=" * 80 + "\n")
 
     def _print_nodes_and_bcs(self):
@@ -86,9 +84,9 @@ class PyNiteSolverEngine(BaseSolverEngine):
 
         for node_name, node in self.pynite_model.nodes.items():
             # Format coordinates (PyNite stores in meters)
-            x_str = f"{node.X:.4f}"
-            y_str = f"{node.Y:.4f}"
-            z_str = f"{node.Z:.4f}"
+            x_str = f"{node.X:.3f}"
+            y_str = f"{node.Y:.3f}"
+            z_str = f"{node.Z:.3f}"
             # Safely access BCs, defaulting to 0 or False if the attribute doesn't exist.
             # PyNite adds these attributes only when support is defined.
             bc_dx = getattr(node, 'support_DX', 0)
@@ -99,7 +97,7 @@ class PyNiteSolverEngine(BaseSolverEngine):
             bc_rz = getattr(node, 'support_RZ', 0)
 
             # Format BCs
-            bc_str = f"({bc_dx}, {bc_dy}, {bc_dz}, {bc_rx}, {bc_ry}, {bc_rz})"
+            bc_str = f"({int(bc_dx)}, {int(bc_dy)}, {int(bc_dz)}, {int(bc_rx)}, {int(bc_ry)}, {int(bc_rz)})"
 
             node_table.add_row([node_name, x_str, y_str, z_str, bc_str])
 
@@ -157,9 +155,8 @@ class PyNiteSolverEngine(BaseSolverEngine):
         """Prints a summary of all 1D members/beams including their Transformation Matrices."""
         header = "\n--- 4. Beams (Members) Summary ---\n"
         member_table = PrettyTable()
-        member_table.field_names = ["ID", "Node I", "Node J", "Material", "Section", "Rotation (deg)", "Releases"]
+        member_table.field_names = ["ID", "Node I", "Node J", "Material", "Section", "Rot.   (deg)", "Releases"]
         member_table.align = "l"
-
         for mem_name, mem in self.pynite_model.members.items():
             member_table.add_row([
                 mem_name,
@@ -168,7 +165,7 @@ class PyNiteSolverEngine(BaseSolverEngine):
                 mem.material.name,
                 mem.section.name,
                 f"{mem.rotation:.2f}",
-                mem.Releases
+                ["".join(map(str, map(int, mem.Releases[i:i + 6]))) for i in range(0, len(mem.Releases), 6)]
             ])
 
         App.Console.PrintMessage(header + member_table.get_string() + "\n")
@@ -237,23 +234,23 @@ class PyNiteSolverEngine(BaseSolverEngine):
             for mem_name, mem in self.pynite_model.members.items():
                 # Distributed Loads
                 # Check if these are objects or tuples based on your nodal load findings
-                for ld in getattr(mem, 'dist_loads', []):
+                for ld in getattr(mem, 'DistLoads', []):
                     # Trying object access first, then tuple fallback
                     ld_case = getattr(ld, 'case', ld[5] if isinstance(ld, tuple) and len(ld) > 5 else '')
                     if ld_case == case_name:
                         # Assuming objects for members, update indices if logs show tuples here too
-                        mem_load_table.add_row([mem_name, "Dist", ld.direction,
-                                                f"{ld.w1:.2f}", f"{ld.w2:.2f}",
-                                                f"{ld.x1:.2f}", f"{ld.x2:.2f}"])
+                        mem_load_table.add_row([mem_name, "Dist", ld[0],
+                                                f"{ld[1]:.2f}", f"{ld[2]:.2f}",
+                                                f"{ld[3]:.2f}", f"{ld[4]:.2f}"])
                         has_mem_loads = True
 
                 # Point Loads
-                for ld in getattr(mem, 'pt_loads', []):
+                for ld in getattr(mem, 'Ptloads', []):
                     ld_case = getattr(ld, 'case', ld[3] if isinstance(ld, tuple) and len(ld) > 3 else '')
                     if ld_case == case_name:
-                        mem_load_table.add_row([mem_name, "Point", ld.direction,
-                                                f"{ld.P:.2f}", "-",
-                                                f"{ld.x:.2f}", "-"])
+                        mem_load_table.add_row([mem_name, "Point", ld[0],
+                                                f"{ld[1]:.2f}", "-",
+                                                f"{ld[2]:.2f}", "-"])
                         has_mem_loads = True
 
             if has_mem_loads:
@@ -434,7 +431,7 @@ class PyNiteSolverEngine(BaseSolverEngine):
                 if material_name not in [mat.name for mat in self.pynite_model.materials.values()]:
                     self.pynite_model.add_material(material_name, E, G, nu, rho)
                 rotation = getattr(beam, "section_rotation", 0.0)
-                print("rotation",rotation,type(rotation))
+
                 self.pynite_model.add_member(beam_id, start_node, end_node, material_name, section_name,
                                              rotation=rotation)
 
@@ -467,9 +464,7 @@ class PyNiteSolverEngine(BaseSolverEngine):
     def _add_load_case(self, load_case):
         """Add loads nested under a load case."""
         case_name = load_case.Label
-        print("add loadcade ",case_name)
         for child in load_case.Group:
-            print("child type",getattr(child, "Type", ""))
             if getattr(child, "Type", "") == "NodalLoad":
                 # Nodal forces are assumed to be in N (PyNite default)
                 for node in child.Nodes:
