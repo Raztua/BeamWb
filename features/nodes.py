@@ -210,10 +210,10 @@ class ResultNode(NodeFeature):
         obj.Type = "ResultNode"
         obj.addProperty("App::PropertyLink", "BaseNode", "Base", "Original node")
         obj.addProperty("App::PropertyVectorDistance", "Displacement", "Results", "Node displacement (mm)")
-        obj.addProperty("App::PropertyLength", "DisplacementMagnitude", "Results", "Displacement magnitude")
-        obj.addProperty("App::PropertyLength", "Base_X", "Base", "original position", 4)
-        obj.addProperty("App::PropertyLength", "Base_Y", "Base", "original position", 4)
-        obj.addProperty("App::PropertyLength", "Base_Z", "Base", "original position", 4)
+        obj.addProperty("App::PropertyDistance", "DisplacementMagnitude", "Results", "Displacement magnitude")
+        obj.addProperty("App::PropertyDistance", "Base_X", "Base", "original position", 4)
+        obj.addProperty("App::PropertyDistance", "Base_Y", "Base", "original position", 4)
+        obj.addProperty("App::PropertyDistance", "Base_Z", "Base", "original position", 4)
 
         if base_node:
             obj.X = base_node.X

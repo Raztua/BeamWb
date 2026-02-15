@@ -283,13 +283,11 @@ def create_load_id(name="Load"):
         raise RuntimeError("No active document")
 
     # Ensure unique name
-    index = 1
     base_name = name
     while True:
-        label = f"{base_name}{index}"
+        label = f"{base_name}"
         if not any(obj.Label == label for obj in doc.Objects):
             break
-        index += 1
 
     # Create the LoadID object
     load_id = doc.addObject("App::DocumentObjectGroupPython", label)
