@@ -17,6 +17,7 @@ class MemberLoad:
         try:
             obj.Proxy = self
             obj.addProperty("App::PropertyString", "Type", "Base", "Load Type").Type = "MemberLoad"
+            obj.addProperty("App::PropertyString", "Comment", "Base", "Comment", 4)
             obj.addProperty("App::PropertyLinkList", "Beams", "Base", "Applied Beams")
             obj.addProperty("App::PropertyVector", "StartForce", "Load", "Start Force vector (N)")
             obj.addProperty("App::PropertyVector", "EndForce", "Load", "End Force vector (N)")

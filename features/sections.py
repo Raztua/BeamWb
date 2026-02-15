@@ -114,6 +114,7 @@ class SectionFeature:
         self.flagModification = False
         # --- Identification feature type ---
         obj.addProperty("App::PropertyString", "Type", "Base", "Feature Type").Type = "SectionFeature"
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Comment",4)
         # --- Standard Identification - I tube,etc.. ---
         obj.addProperty("App::PropertyEnumeration", "ProfileType", "Section", "Profile Type")
         obj.ProfileType = PROFILE_TYPES
@@ -383,6 +384,28 @@ class SectionViewProvider:
 
     def canDropObjects(self):
         return False
+
+    def doubleClicked(self, vobj):
+        """Handle double-click event to open the modifier"""
+        try:
+            from ui.dialog_SectionModifier import show_section_modifier
+            show_section_modifier([vobj.Object])
+            return True
+        except Exception as e:
+            App.Console.PrintError(f"Error opening section modifier: {str(e)}\n")
+            return False
+
+    def setupContextMenu(self, vobj, menu):
+        """Add custom context menu item for sections"""
+        from PySide import QtGui
+        action = QtGui.QAction("Modify Section Properties", menu)
+        action.triggered.connect(lambda: self.onModifySection(vobj.Object))
+        menu.addAction(action)
+
+    def onModifySection(self, obj):
+        """Helper to call the modifier from the context menu"""
+        from ui.dialog_SectionModifier import show_section_modifier
+        show_section_modifier([obj])
 
 
 class SectionLibrary:

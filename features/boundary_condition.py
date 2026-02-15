@@ -27,6 +27,7 @@ class BoundaryConditionFeature:
         self.Object = obj
         # Add properties
         obj.addProperty("App::PropertyString", "Type", "Base", "Boundary condition type").Type = "BoundaryCondition"
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Comment", 4)
         obj.addProperty("App::PropertyLinkList", "Nodes", "Boundary", "Nodes with this boundary condition")
 
         # Fixity properties

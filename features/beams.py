@@ -28,7 +28,7 @@ class BeamFeature:
         self.Object = obj
         obj.Proxy = self
         self.flagInit = True
-
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Comment",4)
         # Node properties
         obj.addProperty("App::PropertyLink", "StartNode", "Beam", "Start node object").StartNode = None
         obj.addProperty("App::PropertyLink", "EndNode", "Beam", "End node object").EndNode = None

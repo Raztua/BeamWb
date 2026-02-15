@@ -40,7 +40,7 @@ class LoadID:
 
         # Add custom properties
         obj.addProperty("App::PropertyString", "Type", "Base", "Group Type", 4).Type = "LoadIDFeature"
-        obj.addProperty("App::PropertyString", "Description", "Load", "Load description")
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Comment", 4)
 
 
     def execute(self, obj):

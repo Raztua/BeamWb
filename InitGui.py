@@ -29,14 +29,14 @@ class BeamWB(Workbench):
 
     def __init__(self):
         import os
-        from commands import BeamTools
+        from commands import Beam_Tools
         from PySide import QtCore
 
         translate = FreeCAD.Qt.translate
 
         # Get the directory containing this file
         icon_path = os.path.join(
-            BeamTools.getBeamModulePath(), "icons", "beam_workbench.svg"
+            Beam_Tools.getBeamModulePath(), "icons", "beam_workbench.svg"
         )
         self.__class__.Icon = icon_path
         self.__class__.MenuText = translate("BeamWorkbench", "Beam Workbench")
@@ -44,43 +44,42 @@ class BeamWB(Workbench):
             "BeamWorkbench", "A workbench for Beam FEM modeling"
         )
 
-        icons_path = os.path.join(BeamTools.getBeamModulePath(), "icons")
+        icons_path = os.path.join(Beam_Tools.getBeamModulePath(), "icons")
         QtCore.QDir.addSearchPath("icons", icons_path)
 
     def Initialize(self):
         """Initialize the workbench with lazy imports"""
         # Import commands only when needed
-        from commands.Beamnodes import (
+        from commands.Beam_nodes import (
             ManageNodesCommand,
             ModifyNodeCommand,
             OffsetNodeCommand,
             CreateNodeCommand,
         )
-        from commands.Beamsections import CreateSectionCommand
-        from commands.Beamloads import (
+        from commands.Beam_sections import CreateSectionCommand
+        from commands.Beam_loads import (
             CreateLoadIDCommand,
             CreateNodalLoadCommand,
             CreateMemberLoadCommand,
             CreateAccelerationLoadCommand,
         )
-        from commands.beams import CreateBeamCommand, ModifyBeamCommand
-        from commands.Beamtest import TestCommand
-        from commands.Beamload_combination import CreateLoadCombinationCommand
-        from commands.Beamboundary_conditions import CreateBoundaryConditionCommand
-        from commands.BeamAnalysisGroup import CreateAnalysisGroupCommand
-        from commands.Beammember_releases import CreateMemberReleaseCommand
-        from commands.Beamrun_analysis import AnalysisCommand
-        from commands.Beammaterial import CreateMaterialCommand
-        from commands.BeamItemLabeling import ItemLabelingCommand
-        from commands.BeamColorizer import BeamColorizerCommand
-        from commands.BeamCodeCheck import CreateCodeCheckCommand
-        from commands.Beamresults_viewer import ResultsViewerCommand
-        from commands.Beamsolver import AnalysisCommand
+        from commands.Beam_beams import CreateBeamCommand, ModifyBeamCommand
+        from commands.Beam_test import TestCommand
+        from commands.Beam_load_combination import CreateLoadCombinationCommand
+        from commands.Beam_boundary_conditions import CreateBoundaryConditionCommand
+        from commands.Beam_AnalysisGroup import CreateAnalysisGroupCommand
+        from commands.Beam_member_releases import CreateMemberReleaseCommand
+        from commands.Beam_run_analysis import AnalysisCommand
+        from commands.Beam_material import CreateMaterialCommand
+        from commands.Beam_ItemLabeling import ItemLabelingCommand
+        from commands.Beam_Colorizer import BeamColorizerCommand
+        from commands.Beam_CodeCheck import CreateCodeCheckCommand
+        from commands.Beam_results_viewer import ResultsViewerCommand
+        from commands.Beam_solver import AnalysisCommand
 
         # Define command lists for each category
         model_setup_commands = [
             "CreateAnalysisGroup",
-            "ManageNodes",
             "CreateNode",
             "ModifyNode",
             "OffsetNode",
@@ -120,15 +119,40 @@ class BeamWB(Workbench):
         self.appendToolbar("Post-Processing", post_processing_commands)
         self.appendMenu("Post-Processing", post_processing_commands)
 
-    #
+        self.dock_panel = None
 
     def Activated(self):
         """When workbench is activated"""
-        pass
+        from PySide import QtCore, QtGui, QtWidgets
+        import ui.SpreadsheetPanel as SpreadsheetPanel
+        # Check if dock already exists to avoid duplicates
+        mw = FreeCADGui.getMainWindow()
+        dock = mw.findChild(QtWidgets.QDockWidget, "BeamSpreadsheet")
+
+        if not dock:
+            # Create the Dock Widget wrapper
+            dock = QtWidgets.QDockWidget("Beam Spreadsheet", mw)
+            dock.setObjectName("BeamSpreadsheet")  # Crucial for finding it later
+            empty_title_bar = QtWidgets.QWidget()
+            dock.setTitleBarWidget(empty_title_bar)
+
+            # Create our custom content widget
+            self.panel_widget = SpreadsheetPanel.SpreadsheetPanel()
+            dock.setWidget(self.panel_widget)
+
+            # Add to Main Window
+            mw.addDockWidget(QtCore.Qt.BottomDockWidgetArea, dock)
+
+        dock.setVisible(True)
+
 
     def Deactivated(self):
-        """When workbench is deactivated"""
-        pass
+        # Optional: Hide the dock when leaving the workbench
+        from PySide import QtCore, QtGui,QtWidgets
+        mw = FreeCADGui.getMainWindow()
+        dock = mw.findChild(QtWidgets.QDockWidget, "BeamSpreadsheet")
+        if dock:
+            dock.setVisible(False)
 
     def GetClassName(self):
         return "Gui::PythonWorkbench"

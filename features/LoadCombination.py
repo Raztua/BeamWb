@@ -18,7 +18,7 @@ class LoadCombination:
 
         # Add custom properties
         obj.addProperty("App::PropertyString", "Type", "Base", "Load Combination Type").Type = "LoadCombination"
-        obj.addProperty("App::PropertyString", "Description", "Base", "Combination description")
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Combination description")
         obj.addProperty("App::PropertyFloatList", "Coefficients", "Load", "Load coefficients")
         obj.addProperty("App::PropertyLinkList", "Loads", "Load", "Combined loads")
 
@@ -66,6 +66,27 @@ class LoadCombinationViewProvider:
 
     def onChanged(self, vobj, prop):
         pass
+
+    def doubleClicked(self, vobj):
+        """Handle double-click to open modifier"""
+        try:
+            from ui.dialog_LoadCombination import show_load_combination_modifier
+            show_load_combination_modifier([vobj.Object])
+            return True
+        except Exception as e:
+            App.Console.PrintError(f"Error: {str(e)}\n")
+            return False
+
+    def setupContextMenu(self, vobj, menu):
+        """Add context menu item"""
+        from PySide import QtGui
+        action = QtGui.QAction("Modify Combination", menu)
+        action.triggered.connect(lambda: self.onModify(vobj.Object))
+        menu.addAction(action)
+
+    def onModify(self, obj):
+        from ui.dialog_LoadCombination import show_load_combination_modifier
+        show_load_combination_modifier([obj])
 
     def __getstate__(self):
         return None
@@ -163,7 +184,7 @@ class LoadCombinationGroupViewProvider:
         load_id_map = {load_id: load_id.Label for load_id in all_load_ids}
 
         # Define table fields (columns)
-        field_names = ["Combination", "Description"] + list(load_id_map.values())
+        field_names = ["Combination", "Comment"] + list(load_id_map.values())
 
         if not all_load_ids:
             App.Console.PrintWarning("\nNo Load IDs found in the document. Cannot display matrix.\n")
@@ -174,7 +195,7 @@ class LoadCombinationGroupViewProvider:
         table = PrettyTable()
         table.field_names = field_names
         table.align["Combination"] = "l"
-        table.align["Description"] = "l"
+        table.align["Comment"] = "l"
         table.set_style(TableStyle.SINGLE_BORDER)
 
         # Iterate over each Load Combination (rows)
@@ -184,7 +205,7 @@ class LoadCombinationGroupViewProvider:
                 # Dictionary to store coefficients for this combination: {LoadID_Label: Coefficient}
                 comb_coeffs = {load.Label: coeff for load, coeff in zip(comb.Loads, comb.Coefficients)}
 
-                row_data = [comb.Label, getattr(comb, "Description", "N/A")]
+                row_data = [comb.Label, getattr(comb, "Comment", "N/A")]
 
                 # Fill coefficient columns based on the load_id_map order
                 for load_id_label in load_id_map.values():
@@ -233,7 +254,7 @@ def make_load_combination_group():
     return lcomb_group
 
 
-def create_load_combination(name=None, description=None, loads=None, coefficients=None):
+def create_load_combination(name=None, comment=None, loads=None, coefficients=None):
     doc = App.ActiveDocument
     if not doc:
         App.Console.PrintError("No active document found\n")
@@ -247,7 +268,7 @@ def create_load_combination(name=None, description=None, loads=None, coefficient
         comb = doc.addObject("Part::FeaturePython", "LoadCombination")
         LoadCombination(comb)
         comb.Label = name
-        comb.Description = description
+        comb.Comment = comment
         comb.Loads = loads
         comb.Coefficients = coefficients
         group.addObject(comb)

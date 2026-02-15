@@ -85,6 +85,7 @@ class MaterialFeature:
 
         # Basic identification
         obj.addProperty("App::PropertyString", "Type", "Base", "Material Type").Type = "MaterialFeature"
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Comment", 4)
         obj.addProperty("App::PropertyEnumeration", "MaterialType", "Material", "Material category")
         obj.MaterialType = MATERIAL_TYPES
         obj.MaterialType = "Steel"  # Default to steel
@@ -327,6 +328,27 @@ class MaterialViewProvider:
     def canDropObjects(self):
         return False
 
+    def doubleClicked(self, vobj):
+        """Handle double-click event to open the material modifier"""
+        try:
+            from ui.dialog_MaterialModifier import show_material_modifier
+            show_material_modifier([vobj.Object])
+            return True
+        except Exception as e:
+            App.Console.PrintError(f"Error opening material modifier: {str(e)}\n")
+            return False
+
+    def setupContextMenu(self, vobj, menu):
+        """Add custom context menu item for materials"""
+        from PySide import QtGui
+        action = QtGui.QAction("Modify Material Properties", menu)
+        action.triggered.connect(lambda: self.onModifyMaterial(vobj.Object))
+        menu.addAction(action)
+
+    def onModifyMaterial(self, obj):
+        """Helper to call the modifier from the context menu"""
+        from ui.dialog_MaterialModifier import show_material_modifier
+        show_material_modifier([obj])
 
 class MaterialLibrary:
     def __init__(self, obj):

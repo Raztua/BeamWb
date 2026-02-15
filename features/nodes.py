@@ -32,6 +32,7 @@ class NodeFeature(Point):
         super(NodeFeature, self).__init__(obj)
         self.Object = obj
         obj.addProperty("App::PropertyString", "Type", "Base", "Group Type", 4).Type = "NodeFeature"
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Comment",4)
         obj.addProperty("App::PropertyFloat", "PointSize", "UserPoint", "Custom radius", 4)
         obj.addProperty("App::PropertyColor", "PointColor", "UserPoint", "Custom color", 4)
 
@@ -210,7 +211,6 @@ class ResultNode(NodeFeature):
         obj.addProperty("App::PropertyLink", "BaseNode", "Base", "Original node")
         obj.addProperty("App::PropertyVectorDistance", "Displacement", "Results", "Node displacement (mm)")
         obj.addProperty("App::PropertyLength", "DisplacementMagnitude", "Results", "Displacement magnitude")
-
         obj.addProperty("App::PropertyLength", "Base_X", "Base", "original position", 4)
         obj.addProperty("App::PropertyLength", "Base_Y", "Base", "original position", 4)
         obj.addProperty("App::PropertyLength", "Base_Z", "Base", "original position", 4)
@@ -446,7 +446,6 @@ def make_result_nodes_group():
         node_group.Label = "Nodes Results"
         if App.GuiUp:
             node_group.ViewObject.Proxy = NodeResultGroupViewProvider(node_group.ViewObject)
-    print("recompute Nodes l449")
     App.ActiveDocument.recompute()
 
     return node_group

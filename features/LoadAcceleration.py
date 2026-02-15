@@ -12,7 +12,7 @@ class AccelerationLoad:
     def __init__(self, obj):
         obj.Proxy = self
         obj.addProperty("App::PropertyString", "Type", "Base", "Load Type").Type = "AccelerationLoad"
-        
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Comment", 4)
         obj.addProperty("App::PropertyVector", "LinearAcceleration", "Load", "Linear acceleration (g)")
         #not used yet
         obj.addProperty("App::PropertyVector", "AngularAcceleration", "Load", "Angular acceleration (rad/s²)",4)

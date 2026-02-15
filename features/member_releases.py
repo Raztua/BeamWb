@@ -19,6 +19,7 @@ class MemberReleaseFeature:
 
         # Add properties
         obj.addProperty("App::PropertyString", "Type", "Base", "Member release type").Type = "MemberRelease"
+        obj.addProperty("App::PropertyString", "Comment", "Base", "Comment", 4)
 
         # Release properties for start and end
         obj.addProperty("App::PropertyBool", "Start_Dx", "Start Release", "Release - Displacement along X at start").Start_Dx = False
@@ -37,7 +38,7 @@ class MemberReleaseFeature:
 
         # Visual properties
         obj.addProperty("App::PropertyColor", "Color", "Display", "Member release color").Color = (0.0, 0.33, 1.0)
-        obj.addProperty("App::PropertyFloat", "Scale", "Display", "Member release scale").Scale = 1.0
+        obj.addProperty("App::PropertyFloat", "Scale", "Display", "Member release scale").Scale = 5.0
 
         # Set the initial label
         obj.Label = "MemberRelease"

@@ -8,7 +8,7 @@ class LoadCombinationTaskPanel:
     def __init__(self, combination=None):
         self.form = QtGui.QWidget()
         self.form.setWindowTitle("Create Load Combination")
-        self.combination_object = combination
+        self.combination_object = combination[0]
         self.loads = []
 
         self.initUI()
@@ -66,22 +66,22 @@ class LoadCombinationTaskPanel:
     def load_data(self):
         if not self.combination_object:
             return
-
         self.name_input.setText(self.combination_object.Label)
-        if hasattr(self.combination_object, "Description"):
-            self.desc_input.setText(self.combination_object.Description)
-
-        # Assurez-vous que la liste des charges est à jour
+        # Use Comment property as defined in the feature
+        if hasattr(self.combination_object, "Comment"):
+            self.desc_input.setText(self.combination_object.Comment)
         self.update_load_list()
+        # Create a mapping of Load Name -> Coefficient for stable comparison
+        current_data = {l.Name: c for l, c in zip(self.combination_object.Loads, self.combination_object.Coefficients)
+                        if l}
 
         for col, load in enumerate(self.loads):
-            if load in self.combination_object.Loads:
+            # Match using .Name instead of object equality
+            if load.Name in current_data:
                 try:
-                    idx = self.combination_object.Loads.index(load)
-                    coeff = str(self.combination_object.Coefficients[idx])
+                    coeff = str(current_data[load.Name])
                     self.table.item(0, col).setText(coeff)
-                except ValueError:
-                    # Load exists in document but wasn't in Loads list? Should not happen.
+                except (ValueError, AttributeError):
                     pass
 
     def get_combination_data(self):
@@ -119,7 +119,7 @@ class LoadCombinationTaskPanel:
             if self.combination_object:
                 # Update existing combination
                 self.combination_object.Label = data["name"]
-                self.combination_object.Description = data["description"]
+                self.combination_object.Comment = data["description"]
                 self.combination_object.Loads = data["loads"]
                 self.combination_object.Coefficients = data["coefficients"]
             else:
@@ -166,3 +166,18 @@ class LoadCombinationTaskPanel:
         make_load_combination_group()
         # create_load_combination() doit exister pour créer l'objet
         create_load_combination(name, description, loads, coefficients)
+
+
+def show_load_combination_modifier(combination=None):
+    """
+    Standardized entry point for modifying load combinations.
+    Uses the internal load_data() method to pre-fill the UI.
+    """
+    if hasattr(Gui, 'Control') and Gui.Control.activeDialog():
+        Gui.Control.closeDialog()
+
+    # The constructor calls load_data(combination) automatically
+    panel = LoadCombinationTaskPanel(combination=combination)
+
+    Gui.Control.showDialog(panel)
+    return panel

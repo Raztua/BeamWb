@@ -16,6 +16,7 @@ class NodalLoad:
         try:
             obj.Proxy = self
             obj.addProperty("App::PropertyString", "Type", "Base", "Load Type").Type = "NodalLoad"
+            obj.addProperty("App::PropertyString", "Comment", "Base", "Comment", 4)
             #obj.addProperty("App::PropertyLink", "LoadID", "Base", "Parent Load ID")
             obj.addProperty("App::PropertyLinkList", "Nodes", "Base", "Applied Nodes")
             obj.addProperty("App::PropertyVector", "Force", "Load", "Force vector (N)")

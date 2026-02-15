@@ -114,7 +114,7 @@ class NodalLoadTaskPanel:
         for i, coord in enumerate(["X", "Y", "Z"]):
             moment_layout.addWidget(QtGui.QLabel(f"{coord}:"), i, 0)
             line_edit = QtGui.QLineEdit()
-            line_edit.setPlaceholderText("e.g., 5 Nm")
+            line_edit.setPlaceholderText("e.g., 5 N*m")
             line_edit.editingFinished.connect(lambda coord=coord: self.add_unit_if_needed(f"moment_{coord.lower()}"))
             setattr(self, f"moment_{coord.lower()}_input", line_edit)
             moment_layout.addWidget(line_edit, i, 1)
@@ -134,7 +134,7 @@ class NodalLoadTaskPanel:
             if field_name.startswith('force'):
                 line_edit.setText(f"{text} kN")
             elif field_name.startswith('moment'):
-                line_edit.setText(f"{text} Nm")
+                line_edit.setText(f"{text} N*m")
 
     def parse_force_input(self, text):
         """Parse force input with units and return value in N"""
@@ -169,13 +169,13 @@ class NodalLoadTaskPanel:
                 return 0.0
 
             # Convert to Newton-meters
-            if quantity.Unit.Type == 'Pressure':  # N/m² is pressure, but Nm is also in this category
+            if quantity.Unit.Type == 'Work':
                 # Check if it's actually a moment (N·m, kN·m, etc.)
                 # FreeCAD sometimes categorizes Nm as Pressure
-                return quantity.getValueAs('N·m')
+                return quantity.getValueAs('N*m')
             else:
                 QtGui.QMessageBox.warning(self.form, "Warning",
-                                          f"Invalid moment unit. Please use Nm, kNm, etc.\nInput: {text}")
+                                          f"Invalid moment unit. Please use N*m, kN*m, etc.\nInput: {text}")
                 return None
         except Exception as e:
             QtGui.QMessageBox.warning(self.form, "Warning",
@@ -205,9 +205,9 @@ class NodalLoadTaskPanel:
             moment = self.nodal_load_to_modify.Moment
 
             # Keep as Nm for display
-            self.moment_x_input.setText(f"{moment.x:.3f} Nm")
-            self.moment_y_input.setText(f"{moment.y:.3f} Nm")
-            self.moment_z_input.setText(f"{moment.z:.3f} Nm")
+            self.moment_x_input.setText(f"{moment.x:.3f} N*m")
+            self.moment_y_input.setText(f"{moment.y:.3f} N*m")
+            self.moment_z_input.setText(f"{moment.z:.3f} N*m")
 
         # Update display
         self.update_display()
