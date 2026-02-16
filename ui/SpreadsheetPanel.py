@@ -830,7 +830,7 @@ class LoadCombinationSheet(BaseSheet):
         """Standard right-click modifier call."""
         from ui.dialog_LoadCombination import show_load_combination_modifier
         # Pass the list of selected objects; the helper above will handle it
-        show_load_combination_modifier(objects)
+        show_load_combination_modifier(objects[0])
 # =============================================================================
 # MAIN PANEL
 # =============================================================================

@@ -8,7 +8,7 @@ class LoadCombinationTaskPanel:
     def __init__(self, combination=None):
         self.form = QtGui.QWidget()
         self.form.setWindowTitle("Create Load Combination")
-        self.combination_object = combination[0]
+        self.combination_object = combination
         self.loads = []
 
         self.initUI()
