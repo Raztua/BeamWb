@@ -601,8 +601,12 @@ class BeamViewProvider():
         end_release_pos = end_pos - beam_dir * offset_distance
 
         # Get release nodes from member release - coin item
-        start_release_node = release_vp.get_start_release_node()
-        end_release_node = release_vp.get_end_release_node()
+        try:
+            start_release_node = release_vp.get_start_release_node()
+            end_release_node = release_vp.get_end_release_node()
+        except AttributeError:
+            # Fallback if the VP exists but doesn't have these methods yet
+            return
 
         # Add start release visualization
         if start_release_node:
