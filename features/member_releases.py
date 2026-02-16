@@ -99,6 +99,10 @@ class MemberReleaseFeature:
             
         return description.strip()
 
+    def onDocumentRestored(self, obj):
+        """Called when the document is reloaded"""
+        self.Object = obj  # Re-bind the object to the proxy
+        self.Type = "MemberRelease"
     def dumps(self):
         return None
 
