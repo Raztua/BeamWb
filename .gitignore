@@ -1,0 +1,48 @@
+# --- Security (CRITICAL) ---
+# Never commit files with API keys, passwords, or database credentials
+.env
+.env.local
+secrets.json
+config.py
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Virtual Environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- IDE Settings (PyCharm, VS Code, etc.) ---
+.idea/
+.vscode/
+*.swp
+
+# --- Operating System Junk ---
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+Desktop.ini
+
+# --- Testing & Coverage ---
+.coverage
+htmlcov/
+.pytest_cache/
+
+# --- Distribution / Builds (if you package your code) ---
+build/
+dist/
+*.egg-info/
+
+# --- Jupyter Notebooks (if applicable) ---
+.ipynb_checkpoints/
+
+# --- Local Databases (optional) ---
+# If you use SQLite, you usually don't want to commit the actual DB
+*.sqlite3
+*.db

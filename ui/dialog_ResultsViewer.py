@@ -277,6 +277,7 @@ class ResultsViewerTaskPanel:
         # Clear BeamsResult group
         beams_result = doc.getObject("BeamsResult")
         if beams_result:
+
             for obj in list(beams_result.Group):
                 doc.removeObject(obj.Name)
 

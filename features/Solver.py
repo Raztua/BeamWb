@@ -335,7 +335,6 @@ class Solver():
         # Get max value for scalingg
         max_q = obj.Results.get_max_diagram_value(obj.LoadCase, key)
         # Ensure max_q is treated as a Quantity and converted to target unit
-        # print("max q",max_q)
         if not key=="unity_check":
             max_val_float = max_q.getValueAs(target_unit).Value if hasattr(max_q, 'getValueAs') else float(max_q)
         else:
