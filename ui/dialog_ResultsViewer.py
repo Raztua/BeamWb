@@ -189,10 +189,7 @@ class ResultsViewerTaskPanel:
 
     def on_load_case_changed(self, text):
         """Handle load case selection change"""
-        print("ui loadcase cahnged")
-        print("self.solver",self.solver,text)
         if self.solver and text:
-            print("if validated)")
             self.solver.LoadCase = text
 
 

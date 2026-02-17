@@ -228,10 +228,8 @@ class Solver():
             obj.LoadCase = ["None"]
 
     def _update_results(self, obj):
-        print("update 1")
         if not obj.Results.load_cases: return
         lc = obj.LoadCase
-        print("update 2")
         if lc == "None": return
 
         # Check if Envelope is selected
@@ -241,7 +239,6 @@ class Solver():
             App.Console.PrintMessage("Envelope view not yet fully implemented in Solver.py\n")
             return
         if lc not in obj.Results.load_cases: return
-        print("update 3")
         data = obj.Results.load_cases[lc]
         # Update Nodes
         self._update_node_vis(obj, data.get('nodes', {}))
@@ -416,7 +413,6 @@ class Solver():
         Restores the unit signatures when opening a saved file.
         This is critical for App::PropertyQuantity to retain unit behaviors (like MPa).
         """
-        print('Restore')
         self.Object = obj
         obj.Proxy = self
         self.flagInit = False  # allow change
